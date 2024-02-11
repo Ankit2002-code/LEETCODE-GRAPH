@@ -1,0 +1,44 @@
+	#include <iostream>
+	#include <queue>
+	#include <vector>
+	using namespace std;
+	// Function to perform BFS traversal
+	void BFS(vector<vector<int>>& graph, int start) {
+	    int numVertices = graph.size();
+	    vector<bool> visited(numVertices, false);
+	    queue<int> bfsQueue;
+	    visited[start] = true;
+	    bfsQueue.push(start);
+	    while (!bfsQueue.empty()) {
+	        int currentVertex = bfsQueue.front();
+	        bfsQueue.pop();
+	        cout << currentVertex << " ";
+	        for (int adjacentVertex : graph[currentVertex]) {
+	            if (!visited[adjacentVertex]) {
+	                visited[adjacentVertex] = true;
+	                bfsQueue.push(adjacentVertex);
+	            }
+	        }
+	    }
+	}
+	int main() {
+	    int numVertices, numEdges;
+	    cout << "Enter the number of vertices: ";
+	    cin >> numVertices;
+	    cout << "Enter the number of edges: ";
+	    cin >> numEdges;
+	    vector<vector<int>> graph(numVertices);
+	    cout << "Enter the edges (format: u v):" << endl;
+	    for (int i = 0; i < numEdges; ++i) {
+	        int u, v;
+	        cin >> u >> v;
+	        graph[u].push_back(v); // Assuming an undirected graph
+	        graph[v].push_back(u);
+	    }
+	    int startVertex;
+	    cout << "Enter the starting vertex for BFS: ";
+	    cin >> startVertex;
+	    cout << "BFS Traversal starting from vertex " << startVertex << ": ";
+	    BFS(graph, startVertex);
+	    return 0;
+	}
